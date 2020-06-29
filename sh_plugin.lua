@@ -8,6 +8,7 @@ nut.util.include("sh_permissions.lua")
 
 if SERVER then
 	nut.util.include("sv_permissions.lua")
+	nut.util.include("sv_security.lua")
 else
 	nut.util.include("cl_permissions.lua")
 end
