@@ -14,7 +14,7 @@ function nut.admin.save(network)
 end
 
 function nut.admin.load()
-	nut.admin.permissions = util.JSONToTable(file.Read("nutscript/admin_permissions.txt", "DATA")) or {}
+	nut.admin.permissions = util.JSONToTable(file.Read("nutscript/admin_permissions.txt", "DATA") or "")
 end
 
 function PLUGIN:InitPostEntity()

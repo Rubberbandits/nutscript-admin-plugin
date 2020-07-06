@@ -2,45 +2,20 @@ local PLUGIN = PLUGIN
 PLUGIN.name = "Admin"
 PLUGIN.author = "rusty"
 PLUGIN.desc = "Stop using paid admin mods, idiots."
+-- i included this so messages presented to players via the server will be in the language of the server's choice.
+PLUGIN.language = "english"
+
 nut.admin = nut.admin or {}
 
 nut.util.include("sh_permissions.lua")
+nut.util.include("cl_permissions.lua")
 
 if SERVER then
 	nut.util.include("sv_permissions.lua")
-	nut.util.include("sv_security.lua")
-else
-	nut.util.include("cl_permissions.lua")
+	nut.util.include("sv_bans.lua")
 end
 
-/*
-nut.config.add("areaFontSize", 26, "The size of the font of Area Display.", 
-	function(oldValue, newValue)
-		if (CLIENT) then
-			hook.Run("LoadFonts", nut.config.get("font"))
-		end
-	end,
-	{data = {min = 1, max = 128},
-	category = "areaPlugin"
-})
-nut.config.add("areaDispSpeed", 20, "The Appearance Speed of Area Display.", nil, {
-	data = {min = 1, max = 40},
-	category = "areaPlugin"
-})
-*/
-
 local PLUGIN = PLUGIN
-
-/*
-nut.command.add("areamanager", {
-	adminOnly = true,
-	onRun = function(client, arguments)
-		if (client:Alive()) then
-			netstream.Start(client, "nutAreaManager", nut.area.getAllArea())
-		end
-	end
-})
-*/
 
 -- in order to create groups that can noclip
 -- oh this will also fix prediction errors, thanks chessnut.
@@ -49,8 +24,7 @@ function PLUGIN:InitializedPlugins()
 	local plugin = nut.plugin.list["observer"]
 	
 	function plugin:PlayerNoClip(client, state)
-		-- Observer mode is reserved for administrators.
-		if (client:IsAdmin()) then
+		if (client:hasPermission("noclip")) then
 			if SERVER then
 			-- Check if they are entering noclip.
 				if (state) then
