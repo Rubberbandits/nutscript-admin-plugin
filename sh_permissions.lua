@@ -10,6 +10,7 @@ end
 function nut.admin.createGroup(groupName, info)
 	if nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup already exists!")
+		return
 	end
 	
 	nut.admin.permissions[groupName] = info or {
@@ -27,6 +28,7 @@ end
 function nut.admin.removeGroup(groupName)
 	if !nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup doesn't exist!")
+		return
 	end
 	
 	nut.admin.permissions[groupName] = nil
@@ -39,6 +41,7 @@ end
 function nut.admin.addPermission(groupName, permission)
 	if !nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup doesn't exist!")
+		return
 	end
 	
 	nut.admin.permissions[groupName]["permissions"][permission] = true
@@ -51,6 +54,7 @@ end
 function nut.admin.removePermission(groupName, permission)
 	if !nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup doesn't exist!")
+		return
 	end
 	
 	nut.admin.permissions[groupName]["permissions"][permission] = nil
@@ -63,6 +67,7 @@ end
 function nut.admin.setIsAdmin(groupName, isAdmin)
 	if !nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup doesn't exist!")
+		return
 	end
 	
 	nut.admin.permissions[groupName].admin = isAdmin
@@ -75,6 +80,7 @@ end
 function nut.admin.setIsSuperAdmin(groupName, isAdmin)
 	if !nut.admin.permissions[groupName] then
 		Error("[NutScript Administration] This usergroup doesn't exist!")
+		return
 	end
 	
 	nut.admin.permissions[groupName].superadmin = isAdmin

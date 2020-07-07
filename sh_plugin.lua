@@ -23,7 +23,7 @@ local PLUGIN = PLUGIN
 function PLUGIN:InitializedPlugins()
 	local plugin = nut.plugin.list["observer"]
 	
-	function plugin:PlayerNoClip(client, state)
+	plugin.PlayerNoClip = function(plugin, client, state)
 		if (client:hasPermission("noclip")) then
 			if SERVER then
 			-- Check if they are entering noclip.
@@ -69,6 +69,24 @@ function PLUGIN:InitializedPlugins()
 					-- Let npcs target the player again.
 					client:SetNoTarget(false)
 					hook.Run("OnPlayerObserve", client, state)
+				end
+			end
+		end
+	end
+	
+	-- ok this is some hacky shiznit, but is best solution for custom commands and whatnot for admin access
+	-- across multiple plugins that i have no control over
+	for cmd,info in next, nut.command.list do
+		-- automagical access shit to override
+		if info.group or info.superAdminOnly or info.adminOnly then
+			info.onCheckAccess = function(client)
+				return client:hasPermission(cmd)
+			end
+			info.onRun = function(client, arguments)
+				if !info.onCheckAccess(client) then
+					return "@noPerm"
+				else
+					return info._onRun(client, arguments)
 				end
 			end
 		end

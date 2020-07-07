@@ -8,7 +8,7 @@ function nut.admin.save(network)
 	file.Write("nutscript/admin_permissions.txt", util.TableToJSON(nut.admin.permissions))
 	
 	if network then
-		-- honestly, networking the whole ass table is bad practice on every change is bad practice, but who cares lol
+		-- honestly, networking the whole ass table on every change is bad practice, but who cares lol
 		netstream.Start(nil, "nutscript_updateAdminPermissions", nut.admin.permissions)
 	end
 end
@@ -25,6 +25,6 @@ function PLUGIN:ShutDown()
 	nut.admin.save()
 end
 
-netstream.Start("nutscript_requestAdminPermissions", function(ply)
+netstream.Hook("nutscript_requestAdminPermissions", function(ply)
 	netstream.Start(ply, "nutscript_updateAdminPermissions", nut.admin.permissions)
 end)
