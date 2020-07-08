@@ -6,6 +6,7 @@ PLUGIN.desc = "Stop using paid admin mods, idiots."
 PLUGIN.language = "english"
 
 nut.admin = nut.admin or {}
+nut.admin.commands = nut.admin.commands or {}
 
 nut.util.include("sh_permissions.lua")
 nut.util.include("cl_permissions.lua")
@@ -91,6 +92,8 @@ function PLUGIN:InitializedPlugins()
 					return info._onRun(client, arguments)
 				end
 			end
+			
+			nut.admin.commands[cmd] = true
 		end
 	end
 end

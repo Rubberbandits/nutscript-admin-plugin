@@ -5,4 +5,13 @@ LANGUAGE = {
 	insufficientPerms = "You do not have the required permissions to run this command.",
 	commandRanAnnouncement = "%s ran command %s on %s.",
 	genericReason = "No reason specified.",
+	groupCreated = "Usergroup created.",
+	groupRemoved = "Usergroup removed.",
+	groupExists = "Usergroup already exists.",
+	groupNotExists = "Usergroup does not exist.",
+	groupNoPermExists = "Specified usergroup does not have this permission.",
+	groupPermExists = "Specified usergroup already has this permission.",
+	permissionAdded = "Permission added.",
+	permissionRemoved = "Permission removed.",
+	commandNotExists = "Command to add to user permissions does not exist.",
 }
