@@ -21,4 +21,6 @@ LANGUAGE = {
 	plyBanned = "Player banned.",
 	plyKilled = "Player killed.",
 	plyGroupSet = "Player's group has been set.",
+	adminMenuTitle = "Admin Menu",
+	adminWorldMenuTitle = "World",
 }

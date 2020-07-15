@@ -10,6 +10,7 @@ nut.admin.commands = nut.admin.commands or {noclip = true}
 
 nut.util.include("sh_permissions.lua")
 nut.util.include("cl_permissions.lua")
+nut.util.include("cl_plugin.lua")
 
 nut.util.include("sh_commands.lua")
 
