@@ -96,4 +96,35 @@ function PLUGIN:InitializedPlugins()
 			nut.admin.commands[cmd] = true
 		end
 	end
+	
+	-- a lot of these kinds of detours we might have to update for things to work in the future
+	-- but this allows for better support
+	nut.command.findPlayer = function(client, name)
+		local calling_func = debug.getinfo(2)
+		local command
+		local target = type(name) == "string" and nut.util.findPlayer(name) or NULL
+
+		for cmd,info in next, nut.command.list do
+			if info._onRun == calling_func.func then
+				-- we've found our command
+				command = info
+			end
+		end
+
+		if (IsValid(target)) then
+			if command and (command.adminOnly or command.superAdminOnly) then
+				local target_group = nut.admin.permissions[target:GetUserGroup()]
+				local client_group = nut.admin.permissions[client:GetUserGroup()]
+				
+				if target_group.position < client_group.position then
+					client:notifyLocalized("plyCantTarget")
+					return
+				end
+			end
+		
+			return target
+		else
+			client:notifyLocalized("plyNoExist")
+		end
+	end
 end

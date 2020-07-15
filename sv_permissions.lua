@@ -105,6 +105,36 @@ function nut.admin.setIsSuperAdmin(groupName, isAdmin)
 	end
 end
 
+function nut.admin.setGroupPosition(groupName, position)
+	if !nut.admin.permissions[groupName] then
+		Error("[NutScript Administration] This usergroup doesn't exist!\n")
+		return
+	end
+	
+	local group = nut.admin.permissions[groupName]
+	local oldPos = group.position
+	
+	for name,group in next, nut.admin.permissions do
+		if name == groupName then continue end
+
+		if position - oldPos > 0 then -- moving position down the stack
+			if group.position > oldPos and group.position <= position then
+				group.position = group.position - 1
+			end
+		elseif position - oldPos < 0 then -- moving position up the stack
+			if group.position < oldPos and group.position >= position then
+				group.position = group.position + 1
+			end
+		end
+	end
+	
+	group.position = position
+	
+	if SERVER then
+		nut.admin.save(true)
+	end
+end
+
 function PLUGIN:InitPostEntity()
 	nut.admin.load()
 end

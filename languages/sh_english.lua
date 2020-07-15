@@ -14,4 +14,12 @@ LANGUAGE = {
 	permissionAdded = "Permission added.",
 	permissionRemoved = "Permission removed.",
 	commandNotExists = "Command to add to user permissions does not exist.",
+	plyCantTarget = "You cannot target users with a higher group position.",
+	groupPosChanged = "Usergroup's position has been changed.",
+	invalidArg = "Error: invalid argument.",
+	plyNotFound = "Error: player not found.",
+	plyKicked = "Player kicked.",
+	plyBanned = "Player banned.",
+	plyKilled = "Player killed.",
+	plyGroupSet = "Player's group has been set.",
 }
