@@ -6,7 +6,7 @@ PLUGIN.desc = "Stop using paid admin mods, idiots."
 PLUGIN.language = "english"
 
 nut.admin = nut.admin or {}
-nut.admin.commands = nut.admin.commands or {}
+nut.admin.commands = nut.admin.commands or {noclip = true}
 
 nut.util.include("sh_permissions.lua")
 nut.util.include("cl_permissions.lua")
@@ -128,3 +128,50 @@ function PLUGIN:InitializedPlugins()
 		end
 	end
 end
+
+/* gotta give people some way to actually make themselves a rank lol */
+
+concommand.Add("plysetgroup", function( ply, cmd, args )
+    if !IsValid(ply) then
+		local target = nut.util.findPlayer(args[1])
+		if IsValid(target) then
+			if nut.admin.permissions[args[2]] then
+				nut.admin.setPlayerGroup(target, args[2])
+			else
+				MsgC(Color(200,20,20), "[NutScript Admin] Error: usergroup not found.\n")
+			end
+		else
+			MsgC(Color(200,20,20), "[NutScript Admin] Error: specified player not found.\n")
+		end
+	end
+end)
+
+/* command to populate default ranks */
+
+concommand.Add("nsadmin_createownergroup", function( ply, cmd, args )
+    if !IsValid(ply) then
+		nut.admin.createGroup("owner", {
+			position = 0,
+			admin = false,
+			superadmin = true,
+			permissions = {},
+		})
+		
+		for cmd,_ in next, nut.admin.commands do
+			nut.admin.permissions["owner"].permissions[cmd] = true
+		end
+		
+		nut.admin.save(true)
+	end
+end)
+
+concommand.Add("nsadmin_wipegroups", function( ply, cmd, args )
+    if !IsValid(ply) then
+		for k,v in next, player.GetAll() do
+			v:SetUserGroup("user")
+		end
+	
+		nut.admin.permissions = {}
+		nut.admin.save(true)
+	end
+end)

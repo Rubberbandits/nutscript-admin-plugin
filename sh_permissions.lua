@@ -11,9 +11,13 @@ end
 -- plugins that go off of those funcs
 
 function meta:IsAdmin()
-	return nut.admin.permissions[self:GetUserGroup()] and nut.admin.permissions[self:GetUserGroup()].admin or false
+	if !nut.admin.permissions[self:GetUserGroup()] then return false end
+
+	return (nut.admin.permissions[self:GetUserGroup()].admin or nut.admin.permissions[self:GetUserGroup()].superadmin) or false
 end
 
 function meta:IsSuperAdmin()
-	return nut.admin.permissions[self:GetUserGroup()] and nut.admin.permissions[self:GetUserGroup()].superadmin or false
+	if !nut.admin.permissions[self:GetUserGroup()] then return false end
+
+	return nut.admin.permissions[self:GetUserGroup()].superadmin or false
 end
